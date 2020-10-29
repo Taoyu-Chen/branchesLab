@@ -3,7 +3,7 @@ class Product {
         this.id = id;
         this.name = name;
         this.price = price;
-         this.quantityInStock = initialQuantity
+        this.quantityInStock = initialQuantity
         this.reorderLevel = reorderLevel
     }
 }
