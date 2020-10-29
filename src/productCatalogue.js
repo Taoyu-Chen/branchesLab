@@ -49,5 +49,24 @@ class Catalogue {
       .reduce((acc, p) => acc + 1, 0);
     return noProductsAdded;
   }
+  search(criteria) {
+    const result = { type: "Search", searchedProducts: [] }
+    if (criteria.price !== undefined) {
+      result.searchedProducts = this.products.filter((p) =>
+        p.price <= criteria.price)
+        .map((p) => p.id);
+      return result;
+    }
+    if (criteria.keyword !== undefined) {
+      result.searchedProducts = this.products.filter((p) =>
+        p.name.search(criteria.keyword) >= 0)
+        .map((p) => p.id);
+      if (result.length !== 0) {
+        return result;
+      } else {
+        throw new Error("Bad Search");
+      }
+    } 
+  }
 }
 module.exports = Catalogue;

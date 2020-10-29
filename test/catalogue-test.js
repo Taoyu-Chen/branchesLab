@@ -94,4 +94,24 @@ describe("Catalogue", () => {
         expect(rejectedProduct).to.be.undefined; 
       });
     });
+    describe('search', () => {
+    it("should return the products whose price is less than (or equal to) the specified value", () => {
+      cat.addProduct(new Product("A129", "noodle", 1, 10, 11.0));
+      cat.addProduct(new Product("A130", "rice", 2, 10, 25.0));
+      cat.addProduct(new Product("A131", "mantou", 2, 10, 33.0));
+      const result = cat.search({ price: 25.00 });
+      expect(result.searchedProducts).to.have.lengthOf(5);
+      expect(result.searchedProducts).to.have.members(["A123","A124", "A125", "A129", "A130"]);
+    });
+    it("should return the products with the keyword in their name", () => {
+      cat.addProduct(new Product("A132", "steamed bun", 1, 10, 13.0));
+      const result = cat.search({ keyword: 'bun' });
+      expect(result.searchedProducts).to.have.lengthOf(1);
+      expect(result.searchedProducts).to.have.members(["A132"]);
+    });
+    it("should throw an exception when the criteria object has neither key", () => {
+      cat.addProduct(new Product("A133", "zongzi", 1, 10, 15));
+      expect(() => cat.search({ keyword: 'Widget' }).to.throw("Bad Search"));
+    });
+  });
 });
