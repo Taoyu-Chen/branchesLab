@@ -25,6 +25,15 @@ class Catalogue {
     }
     return removedProduct;
   }
-  
+  batchAddProducts(batch) {
+    const noProductsAdded = batch.products
+      .filter((product) => product.quantityInStock > 0 )
+      .filter((p) => {
+        this.addProduct(p);
+        return true;
+      })
+      .reduce((acc, p) => acc + 1, 0);
+    return noProductsAdded;
+  }
 }
 module.exports = Catalogue;
